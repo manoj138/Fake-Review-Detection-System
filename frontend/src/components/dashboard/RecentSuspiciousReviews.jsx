@@ -42,8 +42,8 @@ export function RecentSuspiciousReviews({ reviews = [], onUpdateStatus, classNam
         </Link>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs border-collapse">
+      <div className="overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0">
+        <table className="w-full min-w-[620px] text-left text-xs border-collapse">
           <thead>
             <tr className="border-b border-brand-border bg-slate-50/70 text-brand-muted uppercase font-semibold">
               <th className="py-2.5 px-3">Review Snippet</th>

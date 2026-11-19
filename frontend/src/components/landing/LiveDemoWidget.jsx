@@ -103,7 +103,7 @@ export function LiveDemoWidget() {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-brand-muted font-medium">Assigned Rating:</span>
                   <RatingStars rating={rating} size="sm" interactive onChange={setRating} />
@@ -116,6 +116,7 @@ export function LiveDemoWidget() {
                   loading={isAnalyzing}
                   icon={Sparkles}
                   onClick={handleAnalyze}
+                  className="w-full sm:w-auto"
                 >
                   Analyze Content
                 </Button>

@@ -36,7 +36,7 @@ export function AuthFormContainer({
       </div>
 
       {/* Form Body */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-border shadow-subtle">
+      <div className="bg-white p-5 sm:p-8 rounded-2xl border border-brand-border shadow-subtle">
         {children}
       </div>
     </div>

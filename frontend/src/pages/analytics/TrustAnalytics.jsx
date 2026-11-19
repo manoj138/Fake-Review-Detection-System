@@ -7,21 +7,18 @@ import { ReviewTrendChart } from '../../components/charts/ReviewTrendChart';
 import { SentimentChart } from '../../components/charts/SentimentChart';
 import { RatingChart } from '../../components/charts/RatingChart';
 import { CategoryComparisonChart } from '../../components/charts/CategoryComparisonChart';
-import { RiskDistributionChart } from '../../components/charts/RiskDistributionChart';
 import {
   CATEGORY_COMPARISON,
   RATING_AUTHENTICITY,
   DETECTION_REASONS_BREAKDOWN,
-  HOURLY_SUSPICIOUS_HEAT,
 } from '../../data/analyticsData';
 import {
   DETECTION_TRENDS,
   SENTIMENT_DISTRIBUTION,
-  RISK_DISTRIBUTION,
 } from '../../data/dashboardData';
 import { MOCK_PRODUCTS } from '../../data/productsData';
 import { formatNumber } from '../../utils/formatNumber';
-import { Download, ShieldCheck, AlertCircle, BarChart3, TrendingUp } from 'lucide-react';
+import { Download, ShieldCheck } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 
 export function TrustAnalytics() {
@@ -38,13 +35,13 @@ export function TrustAnalytics() {
     .slice(0, 4);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Page Header */}
       <PageHeader
         title="Trust & Safety Analytics"
         subtitle="Understand authenticity patterns, bot injection behavior, and cross-category fraud vectors."
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <div className="inline-flex p-1 bg-white border border-brand-border rounded-lg shadow-2xs">
               {['7d', '30d', '90d'].map((range) => (
                 <button
@@ -53,7 +50,7 @@ export function TrustAnalytics() {
                     setTimeRange(range);
                     showToast(`Analytics filtered to last ${range.toUpperCase()}`, 'info', 1800);
                   }}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                  className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
                     timeRange === range
                       ? 'bg-[#635BFF] text-white shadow-xs'
                       : 'text-brand-muted hover:text-brand-dark'
@@ -69,6 +66,7 @@ export function TrustAnalytics() {
               size="sm"
               icon={Download}
               onClick={handleExport}
+              className="flex-1 sm:flex-initial"
             >
               Export Analytics
             </Button>
@@ -77,8 +75,8 @@ export function TrustAnalytics() {
       />
 
       {/* Row 1: Fake vs Genuine Trends & Sentiment Split */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2 min-w-0">
           <ChartCard
             title="Authenticity Trajectory"
             subtitle="Daily volume comparison of verified organic vs flagged synthetic reviews"
@@ -87,7 +85,7 @@ export function TrustAnalytics() {
           </ChartCard>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <ChartCard
             title="Sentiment Breakdown"
             subtitle="Overall polarity distribution of customer submissions"
@@ -98,26 +96,30 @@ export function TrustAnalytics() {
       </div>
 
       {/* Row 2: Category Comparison & Rating Distribution */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ChartCard
-          title="Suspicious Activity by Product Category"
-          subtitle="Percentage of flagged reviews identified across main e-commerce verticals"
-        >
-          <CategoryComparisonChart data={CATEGORY_COMPARISON} height={260} />
-        </ChartCard>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="min-w-0">
+          <ChartCard
+            title="Suspicious Activity by Product Category"
+            subtitle="Percentage of flagged reviews identified across main e-commerce verticals"
+          >
+            <CategoryComparisonChart data={CATEGORY_COMPARISON} height={260} />
+          </ChartCard>
+        </div>
 
-        <ChartCard
-          title="Rating Distribution Authenticity"
-          subtitle="Fake review clustering across 1-star through 5-star ratings"
-        >
-          <RatingChart data={RATING_AUTHENTICITY} height={260} />
-        </ChartCard>
+        <div className="min-w-0">
+          <ChartCard
+            title="Rating Distribution Authenticity"
+            subtitle="Fake review clustering across 1-star through 5-star ratings"
+          >
+            <RatingChart data={RATING_AUTHENTICITY} height={260} />
+          </ChartCard>
+        </div>
       </div>
 
       {/* Row 3: Detection Reasons Breakdown & Top Suspicious Products */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Detection Reasons */}
-        <Card className="p-5 flex flex-col justify-between">
+        <Card className="p-5 flex flex-col justify-between min-w-0">
           <div>
             <div className="flex items-center justify-between mb-1">
               <h3 className="text-base font-semibold text-brand-dark">
@@ -161,7 +163,7 @@ export function TrustAnalytics() {
         </Card>
 
         {/* Top Suspicious Products Table */}
-        <Card className="p-5 flex flex-col justify-between">
+        <Card className="p-5 flex flex-col justify-between min-w-0">
           <div>
             <div className="flex items-center justify-between mb-1">
               <h3 className="text-base font-semibold text-brand-dark">
@@ -221,4 +223,3 @@ export function TrustAnalytics() {
   );
 }
 export default TrustAnalytics;
-

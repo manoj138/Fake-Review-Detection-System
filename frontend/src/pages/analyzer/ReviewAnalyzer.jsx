@@ -125,7 +125,7 @@ export function ReviewAnalyzer() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Review Input Panel (7 Cols) */}
         <div className="lg:col-span-7 space-y-4">
-          <Card className="p-6">
+          <Card className="p-4 sm:p-6">
             <div className="flex items-center justify-between pb-3 border-b border-brand-border mb-4">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-brand-dark">Review Input</span>
@@ -247,7 +247,7 @@ export function ReviewAnalyzer() {
         {/* Right Column: Analysis Results Panel (5 Cols) */}
         <div className="lg:col-span-5 space-y-4">
           {analysisResult ? (
-            <Card className="p-6 border-slate-200">
+            <Card className="p-4 sm:p-6 border-slate-200">
               <div className="flex items-center justify-between pb-3 border-b border-brand-border mb-5">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#8B5CF6] animate-pulse" />

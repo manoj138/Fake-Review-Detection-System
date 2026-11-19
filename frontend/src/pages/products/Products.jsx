@@ -81,14 +81,14 @@ export function Products() {
             />
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-brand-muted hidden sm:inline">Category:</span>
-            <div className="flex flex-wrap gap-1.5">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
+            <span className="text-xs text-brand-muted hidden sm:inline flex-shrink-0">Category:</span>
+            <div className="flex items-center gap-1.5 flex-nowrap sm:flex-wrap">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setCategoryFilter(cat)}
-                  className={`px-3 py-1 text-xs font-medium rounded-lg transition-colors ${
+                  className={`px-3 py-1.5 min-h-[34px] text-xs font-medium rounded-lg transition-colors flex-shrink-0 ${
                     categoryFilter === cat
                       ? 'bg-[#635BFF] text-white shadow-xs font-semibold'
                       : 'bg-slate-100 text-brand-dark hover:bg-slate-200'

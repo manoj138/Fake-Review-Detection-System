@@ -84,7 +84,7 @@ export function Reports() {
       />
 
       {/* Summary Metrics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <Card
           hover
           onClick={() => setStatusFilter('All')}
@@ -182,7 +182,7 @@ export function Reports() {
       {/* Reports Table */}
       <div className="bg-white rounded-xl border border-brand-border shadow-subtle overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
+          <table className="w-full min-w-[700px] text-left text-xs border-collapse">
             <thead>
               <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
                 <th className="py-3 px-4">Report ID</th>
@@ -265,21 +265,23 @@ export function Reports() {
           subtitle={`Submitted on ${formatDate(selectedReport.date)} • Reporter: ${selectedReport.reporter}`}
           maxWidth="max-w-xl"
           footer={
-            <div className="flex items-center justify-between w-full">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
               <Button
                 variant="danger"
                 size="sm"
                 icon={Trash2}
                 onClick={() => handleUpdateReportStatus(selectedReport.id, 'Resolved')}
+                className="w-full sm:w-auto"
               >
                 Takedown Review
               </Button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => handleUpdateReportStatus(selectedReport.id, 'Reviewed')}
+                  className="flex-1 sm:flex-initial"
                 >
                   Mark Under Review
                 </Button>
@@ -288,6 +290,7 @@ export function Reports() {
                   size="sm"
                   icon={Check}
                   onClick={() => handleUpdateReportStatus(selectedReport.id, 'Resolved')}
+                  className="flex-1 sm:flex-initial"
                 >
                   Mark Resolved
                 </Button>

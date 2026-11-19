@@ -85,7 +85,7 @@ export function ReviewExplorer() {
       />
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <Card
           hover
           onClick={() => updateFilter('status', 'All')}
@@ -247,7 +247,7 @@ export function ReviewExplorer() {
       ) : (
         <div className="bg-white rounded-xl border border-brand-border shadow-subtle overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full min-w-[720px] text-left text-xs border-collapse">
               <thead>
                 <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
                   <th className="py-3 px-4">Review Content</th>

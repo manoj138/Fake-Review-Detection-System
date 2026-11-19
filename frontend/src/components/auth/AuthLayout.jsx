@@ -8,7 +8,7 @@ export function AuthLayout({ children }) {
       <AuthBrandPanel />
 
       {/* Right Authentication Workspace */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-10 lg:p-16 overflow-y-auto">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 sm:p-8 lg:p-16 overflow-y-auto min-h-screen">
         {children}
       </div>
     </div>

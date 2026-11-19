@@ -14,7 +14,7 @@ import {
   SENTIMENT_DISTRIBUTION,
 } from '../../data/dashboardData';
 import { MOCK_REVIEWS } from '../../data/reviewsData';
-import { Download, Calendar, Filter, Sparkles } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 
 export function Dashboard() {
@@ -33,13 +33,13 @@ export function Dashboard() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Page Header */}
       <PageHeader
         title="Review Intelligence Overview"
         subtitle="Monitor review authenticity, customer sentiment, and suspicious activity in real time."
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <div className="inline-flex p-1 bg-white border border-brand-border rounded-lg shadow-2xs">
               {['7d', '30d', '90d'].map((p) => (
                 <button
@@ -48,7 +48,7 @@ export function Dashboard() {
                     setPeriod(p);
                     showToast(`Updated view range to last ${p.toUpperCase()}`, 'info', 2000);
                   }}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                  className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
                     period === p
                       ? 'bg-[#635BFF] text-white shadow-xs'
                       : 'text-brand-muted hover:text-brand-dark'
@@ -64,6 +64,7 @@ export function Dashboard() {
               size="sm"
               icon={Download}
               onClick={handleExport}
+              className="flex-1 sm:flex-initial"
             >
               Export Report
             </Button>
@@ -72,27 +73,27 @@ export function Dashboard() {
       />
 
       {/* 4 Polished Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {DASHBOARD_STATS.map((stat) => (
           <StatCard key={stat.id} {...stat} />
         ))}
       </div>
 
       {/* Charts Section: Detection Trends & Sentiment Distribution */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2 min-w-0">
           <ChartCard
             title="Review Detection Trends"
             subtitle={`Genuine vs suspicious reviews volume over the selected ${period} window`}
             action={
-              <div className="flex items-center gap-4 text-xs">
+              <div className="flex items-center gap-3 sm:gap-4 text-xs">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                  <span className="text-brand-muted">Genuine</span>
+                  <span className="text-brand-muted text-[11px] sm:text-xs">Genuine</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                  <span className="text-brand-muted">Suspicious</span>
+                  <span className="text-brand-muted text-[11px] sm:text-xs">Suspicious</span>
                 </div>
               </div>
             }
@@ -101,7 +102,7 @@ export function Dashboard() {
           </ChartCard>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <ChartCard
             title="Sentiment Distribution"
             subtitle="Customer sentiment ratio across all analyzed feedback"
@@ -112,23 +113,24 @@ export function Dashboard() {
       </div>
 
       {/* Risk Distribution & AI Insights */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2 min-w-0">
           <RiskDistribution />
         </div>
 
-        <div>
+        <div className="min-w-0">
           <AIInsightCard />
         </div>
       </div>
 
       {/* Recent Suspicious Reviews Table */}
-      <RecentSuspiciousReviews
-        reviews={reviews}
-        onUpdateStatus={handleUpdateStatus}
-      />
+      <div className="min-w-0">
+        <RecentSuspiciousReviews
+          reviews={reviews}
+          onUpdateStatus={handleUpdateStatus}
+        />
+      </div>
     </div>
   );
 }
 export default Dashboard;
-

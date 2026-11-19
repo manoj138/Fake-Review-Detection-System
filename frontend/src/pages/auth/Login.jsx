@@ -106,7 +106,7 @@ export function Login() {
           />
 
           {/* Remember me & Forgot Password */}
-          <div className="flex items-center justify-between text-xs pt-1">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs pt-1">
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"

@@ -19,25 +19,25 @@ export function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F7FB] flex flex-row font-sans text-[#172033] antialiased">
-      {/* Desktop Sidebar */}
+    <div className="min-h-screen bg-[#F5F7FB] flex flex-row font-sans text-[#172033] antialiased overflow-x-hidden">
+      {/* Desktop Sidebar (Fixed width ~256px on lg+) */}
       <Sidebar
-        className="hidden lg:flex"
+        className="hidden lg:flex flex-shrink-0"
         onHelpClick={() => setHelpModalOpen(true)}
       />
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (< lg screens) */}
       <ResponsiveDrawer
         isOpen={mobileDrawerOpen}
         onClose={() => setMobileDrawerOpen(false)}
         onHelpClick={() => setHelpModalOpen(true)}
       />
 
-      {/* Main Workspace */}
+      {/* Main Workspace Column */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
         <Header onMenuClick={() => setMobileDrawerOpen(true)} />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3.5 sm:p-5 lg:p-8 max-w-7xl w-full mx-auto">
           <Outlet />
         </main>
       </div>
@@ -50,9 +50,9 @@ export function AppLayout() {
         subtitle="Platform documentation, detection methodologies, and developer guidelines"
         maxWidth="max-w-xl"
         footer={
-          <div className="flex items-center justify-between w-full">
-            <span className="text-xs text-brand-muted">Version 1.0.0 (Production Build)</span>
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 w-full">
+            <span className="text-[11px] text-brand-muted">Version 1.0.0 (Production Build)</span>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
               <Button variant="secondary" size="sm" onClick={() => setHelpModalOpen(false)}>
                 Dismiss
               </Button>
@@ -64,19 +64,19 @@ export function AppLayout() {
         }
       >
         <div className="space-y-4 text-xs text-brand-muted leading-relaxed">
-          <div className="p-4 rounded-xl bg-indigo-50/60 border border-indigo-100 text-brand-dark">
-            <div className="flex items-center gap-2 font-semibold text-sm text-[#635BFF] mb-1">
-              <ShieldCheck className="w-4 h-4 text-[#635BFF]" />
-              AI Review Intelligence Architecture
+          <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/60 border border-indigo-100 text-brand-dark">
+            <div className="flex items-center gap-2 font-semibold text-xs sm:text-sm text-[#635BFF] mb-1">
+              <ShieldCheck className="w-4 h-4 text-[#635BFF] flex-shrink-0" />
+              <span>AI Review Intelligence Architecture</span>
             </div>
-            <p className="text-xs text-brand-muted">
+            <p className="text-xs text-brand-muted leading-relaxed">
               ReviewGuard identifies synthetic, incentivized, duplicate, and competitor-sabotage reviews using automated multi-signal analysis.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-brand-dark text-xs mb-1">How Detection Signals Work:</h4>
-            <ul className="list-disc pl-5 space-y-1">
+            <h4 className="font-semibold text-brand-dark text-xs mb-2">How Detection Signals Work:</h4>
+            <ul className="list-disc pl-5 space-y-1.5">
               <li><strong>Duplicate Signatures:</strong> Character-level and n-gram syntactic duplication across disparate merchant stores.</li>
               <li><strong>Emotional Over-Amplification:</strong> Excessive capitalization, triple punctuation bursts, and promotional affiliate tags.</li>
               <li><strong>Rating & Sentiment Dissonance:</strong> Incongruity between star ratings (e.g., 5-stars) and negative phrase vocabulary.</li>
@@ -88,4 +88,4 @@ export function AppLayout() {
     </div>
   );
 }
-
+export default AppLayout;
