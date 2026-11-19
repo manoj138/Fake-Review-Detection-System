@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../hooks/useToast';
+import { UserAvatar } from '../ui/UserAvatar';
 
 const ICON_COMPONENTS = {
   LayoutDashboard,
@@ -164,9 +165,11 @@ export function ResponsiveDrawer({ isOpen, onClose, onHelpClick }) {
         <div className="p-3 border-t border-[#1C2638] bg-[#0E131F]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#635BFF] to-[#8B5CF6] flex items-center justify-center font-bold text-xs text-white flex-shrink-0">
-                {user?.avatar || 'VG'}
-              </div>
+              <UserAvatar
+                name={user?.name || 'Vinita G.'}
+                size="sm"
+                status="online"
+              />
               <div className="min-w-0">
                 <p className="text-xs font-semibold text-white truncate">{user?.name || 'Vinita G.'}</p>
                 <p className="text-[10px] text-slate-400 truncate">{user?.role || 'Lead Officer'}</p>

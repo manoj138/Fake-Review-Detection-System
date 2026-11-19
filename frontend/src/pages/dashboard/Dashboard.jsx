@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageHeader } from '../../components/layout/PageHeader';
-import { Button } from '../../components/ui/Button';
 import { DateRangeSelector } from '../../components/ui/DateRangeSelector';
+import { ExportButton } from '../../components/ui/ExportButton';
 import { StatCard } from '../../components/dashboard/StatCard';
 import { ChartCard } from '../../components/dashboard/ChartCard';
 import { AIInsightCard } from '../../components/dashboard/AIInsightCard';
@@ -15,17 +15,12 @@ import {
   SENTIMENT_DISTRIBUTION,
 } from '../../data/dashboardData';
 import { MOCK_REVIEWS } from '../../data/reviewsData';
-import { Download } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 
 export function Dashboard() {
   const [period, setPeriod] = useState('30d');
   const [reviews, setReviews] = useState(MOCK_REVIEWS);
   const { showToast } = useToast();
-
-  const handleExport = () => {
-    showToast('Exporting Review Intelligence audit report (PDF / CSV)...', 'success');
-  };
 
   const handleUpdateStatus = (reviewId, newStatus) => {
     setReviews((prev) =>
@@ -49,15 +44,12 @@ export function Dashboard() {
               }}
             />
 
-            <Button
-              variant="secondary"
-              size="sm"
-              icon={Download}
-              onClick={handleExport}
-              className="flex-1 sm:flex-initial"
-            >
-              Export Report
-            </Button>
+            <ExportButton
+              label="Export Report"
+              onExport={(fmt) =>
+                showToast(`Exported ${period.toUpperCase()} intelligence audit package (${fmt.toUpperCase()}).`, 'success')
+              }
+            />
           </div>
         }
       />

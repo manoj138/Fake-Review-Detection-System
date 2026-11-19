@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Card } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
+import { ExportButton } from '../../components/ui/ExportButton';
 import { SearchInput } from '../../components/ui/SearchInput';
 import { Select } from '../../components/ui/Select';
 import { ReportTableRow } from '../../components/reports/ReportTableRow';
@@ -55,10 +55,6 @@ export function Reports() {
     setSelectedReport(null);
   };
 
-  const handleExport = () => {
-    showToast('Exporting Flagged Reports registry as CSV...', 'info');
-  };
-
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -66,14 +62,12 @@ export function Reports() {
         title="Moderation & Flagged Reports"
         subtitle="Manage user complaints, automated bot flags, and merchant dispute resolution workflows."
         actions={
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={Download}
-            onClick={handleExport}
-          >
-            Export Log
-          </Button>
+          <ExportButton
+            label="Export Log"
+            onExport={(fmt) =>
+              showToast(`Exported flagged dispute reports as ${fmt.toUpperCase()}.`, 'success')
+            }
+          />
         }
       />
 

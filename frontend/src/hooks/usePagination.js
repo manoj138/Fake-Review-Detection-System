@@ -1,10 +1,17 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 export function usePagination(data = [], initialRowsPerPage = 8) {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 
   const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
+
+  // Automatically reset to page 1 if filtered data reduces available pages
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [totalPages, currentPage]);
 
   const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
 

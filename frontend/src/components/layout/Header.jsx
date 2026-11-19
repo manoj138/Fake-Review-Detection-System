@@ -48,7 +48,7 @@ export function Header({ onMenuClick }) {
     }
   };
 
-  const notifications = [
+  const [notifications, setNotifications] = useState([
     {
       id: 1,
       title: 'Syndicate Bot Cluster Detected',
@@ -70,7 +70,20 @@ export function Header({ onMenuClick }) {
       desc: 'Detection accuracy verified at 94.6% confidence.',
       unread: false,
     },
-  ];
+  ]);
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const handleMarkAllRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+    showToast('All notifications marked as read.', 'info', 2000);
+  };
+
+  const handleNotificationClick = (id) => {
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, unread: false } : n))
+    );
+  };
 
   return (
     <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-brand-border px-3 sm:px-6">
@@ -144,27 +157,55 @@ export function Header({ onMenuClick }) {
               title="Notifications"
             >
               <Bell className="w-4.5 h-4.5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+              )}
             </button>
 
             {notificationsOpen && (
               <div className="fixed sm:absolute right-2 sm:right-0 top-16 sm:top-auto sm:mt-2 w-[calc(100vw-1rem)] sm:w-80 max-w-sm bg-white rounded-xl border border-brand-border shadow-popover p-3 z-50 animate-slide-up">
                 <div className="flex items-center justify-between pb-2 border-b border-brand-border">
-                  <span className="text-xs font-semibold text-brand-dark">
-                    Alerts & Notifications
-                  </span>
-                  <span className="text-[10px] text-brand-primary font-semibold cursor-pointer hover:underline">
-                    Mark all read
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-brand-dark">
+                      Alerts & Notifications
+                    </span>
+                    {unreadCount > 0 && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-rose-50 text-rose-600 border border-rose-200">
+                        {unreadCount} new
+                      </span>
+                    )}
+                  </div>
+                  {unreadCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleMarkAllRead}
+                      className="text-[10px] text-brand-primary font-semibold hover:underline cursor-pointer"
+                    >
+                      Mark all read
+                    </button>
+                  )}
                 </div>
                 <div className="divide-y divide-brand-border/60 max-h-60 overflow-y-auto mt-2">
                   {notifications.map((n) => (
-                    <div key={n.id} className="py-2.5 hover:bg-slate-50 px-2 rounded-lg cursor-pointer">
+                    <div
+                      key={n.id}
+                      onClick={() => handleNotificationClick(n.id)}
+                      className={`py-2.5 px-2 rounded-lg cursor-pointer transition-colors ${
+                        n.unread ? 'bg-indigo-50/40 hover:bg-indigo-50/70' : 'hover:bg-slate-50'
+                      }`}
+                    >
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-brand-dark">{n.title}</span>
-                        <span className="text-[10px] text-brand-muted">{n.time}</span>
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          {n.unread && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#635BFF] flex-shrink-0" />
+                          )}
+                          <span className={`truncate ${n.unread ? 'font-bold text-brand-dark' : 'font-medium text-brand-dark'}`}>
+                            {n.title}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-brand-muted flex-shrink-0 ml-2">{n.time}</span>
                       </div>
-                      <p className="text-[11px] text-brand-muted mt-0.5">{n.desc}</p>
+                      <p className="text-[11px] text-brand-muted mt-0.5 line-clamp-2">{n.desc}</p>
                     </div>
                   ))}
                 </div>

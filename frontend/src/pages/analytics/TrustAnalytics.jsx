@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { ChartCard } from '../../components/dashboard/ChartCard';
 import { Card } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
 import { DateRangeSelector } from '../../components/ui/DateRangeSelector';
+import { ExportButton } from '../../components/ui/ExportButton';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { ReviewTrendChart } from '../../components/charts/ReviewTrendChart';
 import { SentimentChart } from '../../components/charts/SentimentChart';
@@ -29,10 +29,6 @@ export function TrustAnalytics() {
   const [timeRange, setTimeRange] = useState('30d');
   const { showToast } = useToast();
 
-  const handleExport = () => {
-    showToast('Exporting Trust & Safety Analytics package (CSV / JSON)...', 'success');
-  };
-
   // Top suspicious products
   const topSuspiciousProducts = [...MOCK_PRODUCTS]
     .sort((a, b) => b.suspiciousPercentage - a.suspiciousPercentage)
@@ -54,15 +50,12 @@ export function TrustAnalytics() {
               }}
             />
 
-            <Button
-              variant="secondary"
-              size="sm"
-              icon={Download}
-              onClick={handleExport}
-              className="flex-1 sm:flex-initial"
-            >
-              Export Analytics
-            </Button>
+            <ExportButton
+              label="Export Analytics"
+              onExport={(fmt) =>
+                showToast(`Exported ${timeRange.toUpperCase()} analytics metrics (${fmt.toUpperCase()}).`, 'success')
+              }
+            />
           </div>
         }
       />

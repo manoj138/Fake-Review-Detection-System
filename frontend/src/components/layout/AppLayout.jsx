@@ -14,7 +14,8 @@ export function AppLayout() {
   const { showToast } = useToast();
 
   const handleContactSupport = () => {
-    showToast('Support ticket #SR-1904 opened. Our safety engineers will respond shortly.', 'success');
+    const ticketId = `SR-${Math.floor(1000 + Math.random() * 9000)}`;
+    showToast(`Support ticket #${ticketId} created. Safety engineers will respond shortly.`, 'success', 3000);
     setHelpModalOpen(false);
   };
 
