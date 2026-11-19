@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { RatingStars } from '../reviews/RatingStars';
 import { RiskScoreGauge } from '../reviews/RiskScoreGauge';
 import { DetectionReasonList } from '../reviews/DetectionReasonList';
+import { SamplePresetPicker } from '../analyzer/SamplePresetPicker';
 import { analyzeReviewContent } from '../../utils/reviewAnalysis';
 import { Sparkles, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -70,22 +71,12 @@ export function LiveDemoWidget() {
 
         <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-brand-border shadow-card p-6 sm:p-8">
           {/* Preset Buttons */}
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="text-xs font-semibold text-brand-muted mr-1">
-              Test Presets:
-            </span>
-            {DEMO_SAMPLES.map((s, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleSelectSample(s)}
-                className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-[#635BFF] border border-brand-border transition-colors flex items-center gap-1.5"
-              >
-                <Zap className="w-3.5 h-3.5 text-[#635BFF]" />
-                <span>{s.label}</span>
-              </button>
-            ))}
-          </div>
+          <SamplePresetPicker
+            samples={DEMO_SAMPLES}
+            onSelectSample={handleSelectSample}
+            label="Test Presets:"
+            className="mb-4"
+          />
 
           {/* Input & Output Split */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

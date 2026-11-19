@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import { PageHeader } from '../../components/layout/PageHeader';
-import { Card, CardHeader, CardBody } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
-import { RatingStars } from '../../components/reviews/RatingStars';
+import { Card } from '../../components/ui/Card';
 import { RiskBadge } from '../../components/reviews/RiskBadge';
 import { SentimentBadge } from '../../components/reviews/SentimentBadge';
 import { RiskScoreGauge } from '../../components/reviews/RiskScoreGauge';
 import { DetectionReasonList } from '../../components/reviews/DetectionReasonList';
+import { VerdictBanner } from '../../components/analyzer/VerdictBanner';
+import { ReviewInputForm } from '../../components/analyzer/ReviewInputForm';
 import { analyzeReviewContent } from '../../utils/reviewAnalysis';
 import { useToast } from '../../hooks/useToast';
-import {
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertTriangle,
-  HelpCircle,
-  ShieldCheck,
-  Zap,
-  Info,
-  Clock,
-  Layers,
-} from 'lucide-react';
+import { Sparkles, Clock } from 'lucide-react';
 
 const SAMPLE_REVIEWS = [
   {
@@ -84,7 +73,6 @@ export function ReviewAnalyzer() {
     }
 
     setIsAnalyzing(true);
-    // Smooth 400ms simulated AI inference transition
     setTimeout(() => {
       const result = analyzeReviewContent({
         text,
@@ -123,125 +111,23 @@ export function ReviewAnalyzer() {
 
       {/* Main Workspace Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Review Input Panel (7 Cols) */}
-        <div className="lg:col-span-7 space-y-4">
-          <Card className="p-4 sm:p-6">
-            <div className="flex items-center justify-between pb-3 border-b border-brand-border mb-4">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-brand-dark">Review Input</span>
-                <span className="text-xs text-brand-muted">• Single Entry Evaluation</span>
-              </div>
-              <span className="text-xs text-brand-muted">
-                {text.length} characters
-              </span>
-            </div>
-
-            {/* Quick Sample Presets */}
-            <div className="mb-4">
-              <label className="block text-xs font-semibold text-brand-muted uppercase tracking-wider mb-2">
-                Try Example Samples
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {SAMPLE_REVIEWS.map((sample) => (
-                  <button
-                    key={sample.label}
-                    type="button"
-                    onClick={() => handlePopulateSample(sample)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-[#635BFF] border border-brand-border hover:border-indigo-200 transition-colors"
-                  >
-                    <Zap className="w-3.5 h-3.5 text-brand-muted group-hover:text-[#635BFF]" />
-                    <span>{sample.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Textarea */}
-            <div className="mb-4">
-              <label className="block text-xs font-medium text-brand-dark mb-1.5">
-                Review Text <span className="text-rose-500">*</span>
-              </label>
-              <textarea
-                rows={5}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Paste a customer review to evaluate its authenticity..."
-                className="w-full p-3.5 text-sm bg-white border border-brand-border rounded-xl text-brand-dark placeholder-brand-muted/70 focus:outline-none focus:ring-2 focus:ring-[#635BFF]/20 focus:border-[#635BFF] transition-all resize-none font-sans"
-              />
-              <p className="text-[11px] text-brand-muted mt-1.5 flex items-center gap-1">
-                <Info className="w-3.5 h-3.5 text-slate-400" />
-                Hint: Paste raw customer text including punctuations to evaluate syntactical features.
-              </p>
-            </div>
-
-            {/* Rating Selector */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 pt-3 border-t border-brand-border">
-              <div>
-                <label className="block text-xs font-medium text-brand-dark mb-1.5">
-                  Assigned Rating
-                </label>
-                <div className="flex items-center gap-2">
-                  <RatingStars
-                    rating={rating}
-                    size="md"
-                    interactive
-                    onChange={setRating}
-                  />
-                  <span className="text-xs font-semibold text-brand-dark">
-                    {rating}.0
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-brand-dark mb-1">
-                  Product Name
-                </label>
-                <input
-                  type="text"
-                  value={product}
-                  onChange={(e) => setProduct(e.target.value)}
-                  placeholder="e.g. Wireless Headphones"
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-brand-border rounded-lg text-brand-dark focus:outline-none focus:ring-1 focus:ring-[#635BFF]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-brand-dark mb-1">
-                  Reviewer Handle
-                </label>
-                <input
-                  type="text"
-                  value={reviewer}
-                  onChange={(e) => setReviewer(e.target.value)}
-                  placeholder="e.g. Alex T. (optional)"
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-brand-border rounded-lg text-brand-dark focus:outline-none focus:ring-1 focus:ring-[#635BFF]"
-                />
-              </div>
-            </div>
-
-            {/* Action Bar */}
-            <div className="flex items-center justify-between pt-4 border-t border-brand-border">
-              <Button
-                variant="ghost"
-                size="sm"
-                icon={RotateCcw}
-                onClick={handleClear}
-              >
-                Clear
-              </Button>
-
-              <Button
-                variant="ai"
-                size="md"
-                icon={Sparkles}
-                loading={isAnalyzing}
-                onClick={handleRunAnalysis}
-              >
-                Analyze Review
-              </Button>
-            </div>
-          </Card>
+        {/* Left Column: Reusable Review Input Form (7 Cols) */}
+        <div className="lg:col-span-7">
+          <ReviewInputForm
+            text={text}
+            setText={setText}
+            rating={rating}
+            setRating={setRating}
+            product={product}
+            setProduct={setProduct}
+            reviewer={reviewer}
+            setReviewer={setReviewer}
+            onRunAnalysis={handleRunAnalysis}
+            onClear={handleClear}
+            isAnalyzing={isAnalyzing}
+            samples={SAMPLE_REVIEWS}
+            onSelectSample={handlePopulateSample}
+          />
         </div>
 
         {/* Right Column: Analysis Results Panel (5 Cols) */}
@@ -261,43 +147,12 @@ export function ReviewAnalyzer() {
                 </span>
               </div>
 
-              {/* Verdict Banner */}
-              <div
-                className={`p-4 rounded-xl border flex items-center justify-between gap-3 mb-5 ${
-                  analysisResult.verdict === 'Genuine Review'
-                    ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
-                    : analysisResult.verdict === 'Suspicious Review'
-                    ? 'bg-rose-50/80 border-rose-200 text-rose-950'
-                    : 'bg-amber-50/70 border-amber-200 text-amber-900'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {analysisResult.verdict === 'Genuine Review' ? (
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0" />
-                  ) : analysisResult.verdict === 'Suspicious Review' ? (
-                    <AlertTriangle className="w-6 h-6 text-rose-600 flex-shrink-0" />
-                  ) : (
-                    <HelpCircle className="w-6 h-6 text-amber-600 flex-shrink-0" />
-                  )}
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold opacity-75">
-                      Verdict
-                    </span>
-                    <h4 className="text-base font-bold leading-tight">
-                      {analysisResult.verdict}
-                    </h4>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <span className="text-[10px] uppercase tracking-wider font-semibold opacity-75 block">
-                    Confidence
-                  </span>
-                  <span className="text-sm font-bold">
-                    {analysisResult.confidence}%
-                  </span>
-                </div>
-              </div>
+              {/* Reusable Verdict Banner */}
+              <VerdictBanner
+                verdict={analysisResult.verdict}
+                confidence={analysisResult.confidence}
+                className="mb-5"
+              />
 
               {/* Circular Gauge & Core Signals */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center p-4 bg-slate-50/70 rounded-xl border border-brand-border mb-5">
@@ -366,5 +221,5 @@ export function ReviewAnalyzer() {
     </div>
   );
 }
-export default ReviewAnalyzer;
 
+export default ReviewAnalyzer;

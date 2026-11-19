@@ -8,6 +8,7 @@ import { ReviewDetailsModal } from '../../components/reviews/ReviewDetailsModal'
 import { ReviewTableRow } from '../../components/reviews/ReviewTableRow';
 import { Pagination } from '../../components/ui/Pagination';
 import { EmptyState } from '../../components/ui/EmptyState';
+import { TableContainer } from '../../components/ui/TableContainer';
 import { MOCK_REVIEWS } from '../../data/reviewsData';
 import { useFilters } from '../../hooks/useFilters';
 import { usePagination } from '../../hooks/usePagination';
@@ -238,33 +239,31 @@ export function ReviewExplorer() {
           onAction={resetFilters}
         />
       ) : (
-        <div className="bg-white rounded-xl border border-brand-border shadow-subtle overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px] text-left text-xs border-collapse">
-              <thead>
-                <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
-                  <th className="py-3 px-4">Review Content</th>
-                  <th className="py-3 px-4">Product</th>
-                  <th className="py-3 px-4">Rating</th>
-                  <th className="py-3 px-4">Sentiment</th>
-                  <th className="py-3 px-4">Fake Prob.</th>
-                  <th className="py-3 px-4">Risk</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Date</th>
-                  <th className="py-3 px-4 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-brand-border text-brand-dark">
-                {paginatedData.map((review) => (
-                  <ReviewTableRow
-                    key={review.id}
-                    review={review}
-                    onInspect={setSelectedReview}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <TableContainer minWidth="min-w-[720px]">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
+                <th className="py-3 px-4">Review Content</th>
+                <th className="py-3 px-4">Product</th>
+                <th className="py-3 px-4">Rating</th>
+                <th className="py-3 px-4">Sentiment</th>
+                <th className="py-3 px-4">Fake Prob.</th>
+                <th className="py-3 px-4">Risk</th>
+                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-brand-border text-brand-dark">
+              {paginatedData.map((review) => (
+                <ReviewTableRow
+                  key={review.id}
+                  review={review}
+                  onInspect={setSelectedReview}
+                />
+              ))}
+            </tbody>
+          </table>
 
           {/* Table Pagination */}
           <Pagination
@@ -275,7 +274,7 @@ export function ReviewExplorer() {
             onPageChange={goToPage}
             onRowsPerPageChange={changeRowsPerPage}
           />
-        </div>
+        </TableContainer>
       )}
 
       {/* Review Details Inspection Modal */}

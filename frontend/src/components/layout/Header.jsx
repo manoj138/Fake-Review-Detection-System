@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/Button';
 import { SearchInput } from '../ui/SearchInput';
 import { Breadcrumbs } from './Breadcrumbs';
+import { UserAvatar } from '../ui/UserAvatar';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useToast } from '../../hooks/useToast';
 import { useAuth } from '../../context/AuthContext';
@@ -190,9 +191,10 @@ export function Header({ onMenuClick }) {
               }}
               className="flex items-center gap-1.5 p-1 rounded-lg hover:bg-slate-100 transition-colors"
             >
-              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#635BFF] to-[#8B5CF6] text-white font-bold text-xs flex items-center justify-center shadow-xs">
-                {user?.avatar || 'VG'}
-              </div>
+              <UserAvatar
+                name={user?.name || 'Vinita G.'}
+                size="sm"
+              />
               <ChevronDown className="w-3.5 h-3.5 text-brand-muted hidden sm:block" />
             </button>
 

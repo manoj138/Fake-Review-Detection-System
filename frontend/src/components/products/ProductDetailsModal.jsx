@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
+import { CopyButton } from '../ui/CopyButton';
 import { RatingStars } from '../reviews/RatingStars';
 import { RiskBadge } from '../reviews/RiskBadge';
 import { formatNumber } from '../../utils/formatNumber';
@@ -22,7 +23,12 @@ export function ProductDetailsModal({ product, reviews = [], isOpen, onClose }) 
       isOpen={isOpen}
       onClose={onClose}
       title={product.name}
-      subtitle={`Category: ${product.category} • SKU: ${product.sku}`}
+      subtitle={
+        <span className="inline-flex items-center gap-2 flex-wrap">
+          <span>Category: {product.category} • SKU: {product.sku}</span>
+          <CopyButton textToCopy={product.sku} label="Copy SKU" size="xs" />
+        </span>
+      }
       maxWidth="max-w-3xl"
       footer={
         <div className="flex items-center justify-end w-full">

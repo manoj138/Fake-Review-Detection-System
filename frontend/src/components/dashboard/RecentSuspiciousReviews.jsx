@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Card } from '../ui/Card';
-import { RatingStars } from '../reviews/RatingStars';
-import { RiskBadge } from '../reviews/RiskBadge';
+import { SuspiciousReviewRow } from './SuspiciousReviewRow';
 import { ReviewDetailsModal } from '../reviews/ReviewDetailsModal';
-import { formatDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Eye, ShieldAlert } from 'lucide-react';
-import { Button } from '../ui/Button';
+import { ArrowRight } from 'lucide-react';
 
 export function RecentSuspiciousReviews({ reviews = [], onUpdateStatus, className = '' }) {
   const [selectedReview, setSelectedReview] = useState(null);
@@ -57,54 +54,11 @@ export function RecentSuspiciousReviews({ reviews = [], onUpdateStatus, classNam
           </thead>
           <tbody className="divide-y divide-brand-border">
             {suspiciousList.map((review) => (
-              <tr
+              <SuspiciousReviewRow
                 key={review.id}
-                onClick={() => setSelectedReview(review)}
-                className="hover:bg-slate-50/80 cursor-pointer transition-colors"
-              >
-                <td className="py-3 px-3 max-w-xs">
-                  <p className="font-medium text-brand-dark line-clamp-1 italic">
-                    "{review.snippet}"
-                  </p>
-                </td>
-                <td className="py-3 px-3 max-w-[150px]">
-                  <p className="font-semibold text-brand-dark truncate">
-                    {review.product}
-                  </p>
-                  <span className="text-[10px] text-brand-muted">
-                    {review.category}
-                  </span>
-                </td>
-                <td className="py-3 px-3 whitespace-nowrap">
-                  <RatingStars rating={review.rating} size="xs" />
-                </td>
-                <td className="py-3 px-3 whitespace-nowrap">
-                  <span className="font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                    {review.fakeProbability}%
-                  </span>
-                </td>
-                <td className="py-3 px-3 max-w-[180px]">
-                  <span className="text-[11px] text-brand-muted truncate block">
-                    {review.detectionReasons?.[0]?.signal || 'High Pattern Match'}
-                  </span>
-                </td>
-                <td className="py-3 px-3 text-brand-muted whitespace-nowrap">
-                  {formatDate(review.date)}
-                </td>
-                <td className="py-3 px-3 text-right whitespace-nowrap">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={Eye}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedReview(review);
-                    }}
-                  >
-                    Inspect
-                  </Button>
-                </td>
-              </tr>
+                review={review}
+                onInspect={setSelectedReview}
+              />
             ))}
           </tbody>
         </table>
@@ -120,3 +74,4 @@ export function RecentSuspiciousReviews({ reviews = [], onUpdateStatus, classNam
   );
 }
 
+export default RecentSuspiciousReviews;

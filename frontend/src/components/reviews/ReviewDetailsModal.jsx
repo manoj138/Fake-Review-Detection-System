@@ -7,6 +7,7 @@ import { SentimentBadge } from './SentimentBadge';
 import { RiskScoreGauge } from './RiskScoreGauge';
 import { DetectionReasonList } from './DetectionReasonList';
 import { formatDate } from '../../utils/formatDate';
+import { CopyButton } from '../ui/CopyButton';
 import { CheckCircle2, ShieldAlert, Flag, UserCheck, Sparkles } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 
@@ -90,9 +91,16 @@ export function ReviewDetailsModal({ review, isOpen, onClose, onUpdateStatus }) 
 
         {/* Review Content Card */}
         <div className="space-y-1.5">
-          <label className="text-[11px] font-semibold text-brand-dark uppercase tracking-wider">
-            Review Content
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="text-[11px] font-semibold text-brand-dark uppercase tracking-wider">
+              Review Content
+            </label>
+            <CopyButton
+              textToCopy={review.snippet}
+              label="Copy Review"
+              size="xs"
+            />
+          </div>
           <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-brand-border text-xs sm:text-sm text-brand-dark leading-relaxed font-normal italic shadow-2xs">
             "{review.snippet}"
           </div>

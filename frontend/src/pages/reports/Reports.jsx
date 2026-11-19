@@ -6,6 +6,7 @@ import { SearchInput } from '../../components/ui/SearchInput';
 import { Select } from '../../components/ui/Select';
 import { ReportTableRow } from '../../components/reports/ReportTableRow';
 import { ReportDetailsModal } from '../../components/reports/ReportDetailsModal';
+import { TableContainer } from '../../components/ui/TableContainer';
 import { MOCK_REPORTS } from '../../data/reportsData';
 import { useToast } from '../../hooks/useToast';
 import {
@@ -173,32 +174,30 @@ export function Reports() {
       </Card>
 
       {/* Reports Table */}
-      <div className="bg-white rounded-xl border border-brand-border shadow-subtle overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[700px] text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
-                <th className="py-3 px-4">Report ID</th>
-                <th className="py-3 px-4">Review Snippet</th>
-                <th className="py-3 px-4">Target Product</th>
-                <th className="py-3 px-4">Report Reason</th>
-                <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-brand-border text-brand-dark">
-              {filteredReports.map((report) => (
-                <ReportTableRow
-                  key={report.id}
-                  report={report}
-                  onReview={setSelectedReport}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <TableContainer minWidth="min-w-[700px]">
+        <table className="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr className="border-b border-brand-border bg-slate-50/80 text-brand-muted uppercase font-semibold">
+              <th className="py-3 px-4">Report ID</th>
+              <th className="py-3 px-4">Review Snippet</th>
+              <th className="py-3 px-4">Target Product</th>
+              <th className="py-3 px-4">Report Reason</th>
+              <th className="py-3 px-4">Date</th>
+              <th className="py-3 px-4">Status</th>
+              <th className="py-3 px-4 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-brand-border text-brand-dark">
+            {filteredReports.map((report) => (
+              <ReportTableRow
+                key={report.id}
+                report={report}
+                onReview={setSelectedReport}
+              />
+            ))}
+          </tbody>
+        </table>
+      </TableContainer>
 
       {/* Report Details and Action Modal */}
       <ReportDetailsModal

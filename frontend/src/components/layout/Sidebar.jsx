@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from '../../constants/navigation';
 import { useAuth } from '../../context/AuthContext';
+import { UserAvatar } from '../ui/UserAvatar';
 
 const ICON_COMPONENTS = {
   LayoutDashboard,
@@ -158,12 +159,11 @@ export function Sidebar({ className = '', onHelpClick }) {
       <div className="p-3 border-t border-[#1C2638] bg-[#0E131F]">
         <div className="flex items-center justify-between p-2 rounded-lg hover:bg-[#1C2638]/80 transition-colors">
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xs text-white">
-                {user?.avatar || 'VG'}
-              </div>
-              <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#0E131F]" />
-            </div>
+            <UserAvatar
+              name={user?.name || 'Vinita G.'}
+              size="sm"
+              status="online"
+            />
             <div className="flex flex-col text-left max-w-[120px]">
               <span className="text-xs font-semibold text-white leading-tight truncate">
                 {user?.name || 'Vinita G.'}

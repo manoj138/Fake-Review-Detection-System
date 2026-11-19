@@ -1,4 +1,5 @@
 import React from 'react';
+import { FeatureCard } from './FeatureCard';
 import {
   Sparkles,
   Layers,
@@ -70,29 +71,9 @@ export function FeaturesGrid() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {FEATURES.map((feature, idx) => {
-          const Icon = feature.icon;
-          return (
-            <div
-              key={idx}
-              className="p-6 rounded-2xl bg-white border border-brand-border shadow-subtle hover:shadow-card hover:border-indigo-200 transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div
-                  className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${feature.bg} ${feature.color}`}
-                >
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-brand-dark mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-xs text-brand-muted leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+        {FEATURES.map((feature, idx) => (
+          <FeatureCard key={idx} feature={feature} />
+        ))}
       </div>
     </section>
   );

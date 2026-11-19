@@ -1,53 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
+import { ConfirmationDialog } from '../ui/ConfirmationDialog';
+import { CopyButton } from '../ui/CopyButton';
 import { formatDate } from '../../utils/formatDate';
 import { Trash2, Check } from 'lucide-react';
 
 export function ReportDetailsModal({ report, isOpen, onClose, onUpdateStatus }) {
+  const [confirmTakedownOpen, setConfirmTakedownOpen] = useState(false);
+
   if (!report) return null;
 
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={`Moderation Case: ${report.id}`}
-      subtitle={`Submitted on ${formatDate(report.date)} • Reporter: ${report.reporter}`}
-      maxWidth="max-w-xl"
-      footer={
-        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
-          <Button
-            variant="danger"
-            size="sm"
-            icon={Trash2}
-            onClick={() => onUpdateStatus && onUpdateStatus(report.id, 'Resolved')}
-            className="w-full sm:w-auto"
-          >
-            Takedown Review
-          </Button>
+  const handleConfirmTakedown = () => {
+    setConfirmTakedownOpen(false);
+    onUpdateStatus && onUpdateStatus(report.id, 'Resolved');
+  };
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+  return (
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        title={`Moderation Case: ${report.id}`}
+        subtitle={
+          <span className="inline-flex items-center gap-2 flex-wrap">
+            <span>Submitted on {formatDate(report.date)} • Reporter: {report.reporter}</span>
+            <CopyButton textToCopy={report.id} label="Copy Case ID" size="xs" />
+          </span>
+        }
+        maxWidth="max-w-xl"
+        footer={
+          <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
             <Button
-              variant="secondary"
+              variant="danger"
               size="sm"
-              onClick={() => onUpdateStatus && onUpdateStatus(report.id, 'Reviewed')}
-              className="flex-1 sm:flex-initial"
+              icon={Trash2}
+              onClick={() => setConfirmTakedownOpen(true)}
+              className="w-full sm:w-auto"
             >
-              Mark Under Review
+              Takedown Review
             </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={Check}
-              onClick={() => onUpdateStatus && onUpdateStatus(report.id, 'Resolved')}
-              className="flex-1 sm:flex-initial"
-            >
-              Mark Resolved
-            </Button>
+
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onUpdateStatus && onUpdateStatus(report.id, 'Reviewed')}
+                className="flex-1 sm:flex-initial"
+              >
+                Mark Under Review
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                icon={Check}
+                onClick={() => onUpdateStatus && onUpdateStatus(report.id, 'Resolved')}
+                className="flex-1 sm:flex-initial"
+              >
+                Mark Resolved
+              </Button>
+            </div>
           </div>
-        </div>
-      }
-    >
+        }
+      >
       <div className="space-y-4 text-xs">
         <div className="p-3 bg-slate-50 rounded-xl border border-brand-border space-y-1">
           <span className="text-[10px] uppercase font-semibold text-brand-muted">
@@ -95,6 +110,18 @@ export function ReportDetailsModal({ report, isOpen, onClose, onUpdateStatus }) 
         )}
       </div>
     </Modal>
+
+    {/* Confirmation Dialog for Takedown */}
+    <ConfirmationDialog
+      isOpen={confirmTakedownOpen}
+      onClose={() => setConfirmTakedownOpen(false)}
+      onConfirm={handleConfirmTakedown}
+      title="Confirm Review Takedown"
+      message={`Are you sure you want to permanently quarantine and take down review from "${report.product}"? This will notify the merchant and log an automated dispute record.`}
+      confirmLabel="Yes, Takedown Review"
+      variant="danger"
+    />
+  </>
   );
 }
 export default ReportDetailsModal;
