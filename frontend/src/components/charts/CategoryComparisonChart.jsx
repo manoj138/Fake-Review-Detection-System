@@ -68,3 +68,4 @@ export function CategoryComparisonChart({ data = [], height = 280 }) {
     </div>
   );
 }
+

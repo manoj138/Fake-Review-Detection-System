@@ -119,3 +119,4 @@ export function RecentSuspiciousReviews({ reviews = [], onUpdateStatus, classNam
     </Card>
   );
 }
+

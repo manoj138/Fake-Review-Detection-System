@@ -58,3 +58,4 @@ export function AIInsightCard({ className = '' }) {
     </Card>
   );
 }
+

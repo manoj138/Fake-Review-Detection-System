@@ -49,3 +49,4 @@ export function usePagination(data = [], initialRowsPerPage = 8) {
     changeRowsPerPage,
   };
 }
+

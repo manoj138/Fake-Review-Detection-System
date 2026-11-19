@@ -200,3 +200,4 @@ export function Header({ onMenuClick, onSearchSubmit }) {
     </header>
   );
 }
+

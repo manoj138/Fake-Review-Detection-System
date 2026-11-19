@@ -180,3 +180,4 @@ export function analyzeReviewContent({ text, rating = 5, product = '', reviewer 
     analyzedAt: new Date().toISOString(),
   };
 }
+

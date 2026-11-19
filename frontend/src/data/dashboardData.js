@@ -113,3 +113,4 @@ export const AI_INSIGHTS = [
     tag: 'Anomaly',
   },
 ];
+

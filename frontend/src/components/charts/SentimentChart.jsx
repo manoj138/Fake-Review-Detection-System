@@ -71,3 +71,4 @@ export function SentimentChart({ data = [], height = 240 }) {
     </div>
   );
 }
+

@@ -20,3 +20,4 @@ export function RiskDistribution({ className = '' }) {
     </Card>
   );
 }
+

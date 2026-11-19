@@ -92,3 +92,4 @@ export function ReviewTrendChart({ data = [], height = 300 }) {
     </div>
   );
 }
+

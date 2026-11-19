@@ -59,3 +59,4 @@ export function DetectionReasonList({ reasons = [], className = '' }) {
     </div>
   );
 }
+

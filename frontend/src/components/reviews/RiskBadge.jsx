@@ -17,3 +17,4 @@ export function RiskBadge({ level = 'Low', className = '', size = 'md' }) {
     </Badge>
   );
 }
+

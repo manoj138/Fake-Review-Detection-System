@@ -35,3 +35,4 @@ export function CardBody({ children, className = '' }) {
 export function CardFooter({ children, className = '' }) {
   return <div className={`p-4 border-t border-brand-border bg-slate-50/50 rounded-b-xl ${className}`}>{children}</div>;
 }
+

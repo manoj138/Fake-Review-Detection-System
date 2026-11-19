@@ -114,3 +114,4 @@ export function ReviewDetailsModal({ review, isOpen, onClose, onUpdateStatus }) 
     </Modal>
   );
 }
+

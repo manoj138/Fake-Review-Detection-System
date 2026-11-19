@@ -32,3 +32,4 @@ export function SentimentBadge({ sentiment = 'Positive', className = '', size = 
     </span>
   );
 }
+

@@ -284,3 +284,4 @@ export const MOCK_REVIEWS = [
     ],
   },
 ];
+

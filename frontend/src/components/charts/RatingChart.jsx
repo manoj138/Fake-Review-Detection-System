@@ -84,3 +84,4 @@ export function RatingChart({ data = [], height = 280 }) {
     </div>
   );
 }
+

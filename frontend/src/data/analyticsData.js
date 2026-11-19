@@ -30,3 +30,4 @@ export const HOURLY_SUSPICIOUS_HEAT = [
   { hour: '16:00', normal: 640, botBursts: 110 },
   { hour: '20:00', normal: 490, botBursts: 195 },
 ];
+

@@ -16,3 +16,4 @@ export function formatPercent(num, decimals = 1) {
   if (num === undefined || num === null) return '0%';
   return `${Number(num).toFixed(decimals)}%`;
 }
+

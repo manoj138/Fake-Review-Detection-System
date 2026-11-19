@@ -161,3 +161,4 @@ export function ResponsiveDrawer({ isOpen, onClose, onHelpClick }) {
     </div>
   );
 }
+

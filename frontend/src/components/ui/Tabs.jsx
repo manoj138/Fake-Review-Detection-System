@@ -68,3 +68,4 @@ export function Tabs({ tabs = [], activeTab, onChange, variant = 'line', classNa
     </div>
   );
 }
+
