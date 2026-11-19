@@ -3,6 +3,8 @@ import { PageHeader } from '../../components/layout/PageHeader';
 import { ChartCard } from '../../components/dashboard/ChartCard';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
+import { DateRangeSelector } from '../../components/ui/DateRangeSelector';
+import { ProgressBar } from '../../components/ui/ProgressBar';
 import { ReviewTrendChart } from '../../components/charts/ReviewTrendChart';
 import { SentimentChart } from '../../components/charts/SentimentChart';
 import { RatingChart } from '../../components/charts/RatingChart';
@@ -42,24 +44,13 @@ export function TrustAnalytics() {
         subtitle="Understand authenticity patterns, bot injection behavior, and cross-category fraud vectors."
         actions={
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-            <div className="inline-flex p-1 bg-white border border-brand-border rounded-lg shadow-2xs">
-              {['7d', '30d', '90d'].map((range) => (
-                <button
-                  key={range}
-                  onClick={() => {
-                    setTimeRange(range);
-                    showToast(`Analytics filtered to last ${range.toUpperCase()}`, 'info', 1800);
-                  }}
-                  className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                    timeRange === range
-                      ? 'bg-[#635BFF] text-white shadow-xs'
-                      : 'text-brand-muted hover:text-brand-dark'
-                  }`}
-                >
-                  Last {range.toUpperCase()}
-                </button>
-              ))}
-            </div>
+            <DateRangeSelector
+              value={timeRange}
+              onChange={(range) => {
+                setTimeRange(range);
+                showToast(`Analytics filtered to last ${range.toUpperCase()}`, 'info', 1800);
+              }}
+            />
 
             <Button
               variant="secondary"

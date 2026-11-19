@@ -4,21 +4,14 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { SearchInput } from '../../components/ui/SearchInput';
 import { Select } from '../../components/ui/Select';
-import { Modal } from '../../components/ui/Modal';
-import { Badge } from '../../components/ui/Badge';
+import { ReportTableRow } from '../../components/reports/ReportTableRow';
+import { ReportDetailsModal } from '../../components/reports/ReportDetailsModal';
 import { MOCK_REPORTS } from '../../data/reportsData';
-import { formatDate } from '../../utils/formatDate';
 import { useToast } from '../../hooks/useToast';
 import {
-  ShieldAlert,
   Clock,
   CheckCircle2,
-  FileCheck,
   AlertTriangle,
-  Eye,
-  Trash2,
-  Check,
-  XCircle,
   Download,
 } from 'lucide-react';
 
@@ -196,60 +189,11 @@ export function Reports() {
             </thead>
             <tbody className="divide-y divide-brand-border text-brand-dark">
               {filteredReports.map((report) => (
-                <tr
+                <ReportTableRow
                   key={report.id}
-                  onClick={() => setSelectedReport(report)}
-                  className="hover:bg-slate-50/80 cursor-pointer transition-colors"
-                >
-                  <td className="py-3.5 px-4 font-mono font-semibold text-brand-dark whitespace-nowrap">
-                    {report.id}
-                  </td>
-                  <td className="py-3.5 px-4 max-w-xs">
-                    <p className="font-normal text-brand-dark line-clamp-1 italic">
-                      "{report.snippet}"
-                    </p>
-                    <span className="text-[10px] text-brand-muted">
-                      via {report.reporter}
-                    </span>
-                  </td>
-                  <td className="py-3.5 px-4 font-semibold text-brand-dark max-w-[160px] truncate">
-                    {report.product}
-                  </td>
-                  <td className="py-3.5 px-4 max-w-[180px]">
-                    <span className="font-medium text-brand-dark truncate block">
-                      {report.reason}
-                    </span>
-                  </td>
-                  <td className="py-3.5 px-4 text-brand-muted whitespace-nowrap">
-                    {formatDate(report.date)}
-                  </td>
-                  <td className="py-3.5 px-4 whitespace-nowrap">
-                    <span
-                      className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                        report.status === 'Resolved'
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : report.status === 'Pending'
-                          ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                          : 'bg-amber-50 text-amber-700 border border-amber-200'
-                      }`}
-                    >
-                      {report.status}
-                    </span>
-                  </td>
-                  <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      icon={Eye}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedReport(report);
-                      }}
-                    >
-                      Review
-                    </Button>
-                  </td>
-                </tr>
+                  report={report}
+                  onReview={setSelectedReport}
+                />
               ))}
             </tbody>
           </table>
@@ -257,95 +201,12 @@ export function Reports() {
       </div>
 
       {/* Report Details and Action Modal */}
-      {selectedReport && (
-        <Modal
-          isOpen={!!selectedReport}
-          onClose={() => setSelectedReport(null)}
-          title={`Moderation Case: ${selectedReport.id}`}
-          subtitle={`Submitted on ${formatDate(selectedReport.date)} • Reporter: ${selectedReport.reporter}`}
-          maxWidth="max-w-xl"
-          footer={
-            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
-              <Button
-                variant="danger"
-                size="sm"
-                icon={Trash2}
-                onClick={() => handleUpdateReportStatus(selectedReport.id, 'Resolved')}
-                className="w-full sm:w-auto"
-              >
-                Takedown Review
-              </Button>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => handleUpdateReportStatus(selectedReport.id, 'Reviewed')}
-                  className="flex-1 sm:flex-initial"
-                >
-                  Mark Under Review
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  icon={Check}
-                  onClick={() => handleUpdateReportStatus(selectedReport.id, 'Resolved')}
-                  className="flex-1 sm:flex-initial"
-                >
-                  Mark Resolved
-                </Button>
-              </div>
-            </div>
-          }
-        >
-          <div className="space-y-4 text-xs">
-            <div className="p-3 bg-slate-50 rounded-xl border border-brand-border space-y-1">
-              <span className="text-[10px] uppercase font-semibold text-brand-muted">
-                Product Target
-              </span>
-              <p className="font-semibold text-brand-dark text-sm">
-                {selectedReport.product}
-              </p>
-            </div>
-
-            <div>
-              <span className="text-[10px] uppercase font-semibold text-brand-muted block mb-1">
-                Reported Review Content
-              </span>
-              <div className="p-3 rounded-lg border border-brand-border bg-white italic font-normal text-brand-dark">
-                "{selectedReport.snippet}"
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-slate-50 rounded-lg border border-brand-border">
-                <span className="text-[10px] uppercase font-semibold text-brand-muted block">
-                  Violation Category
-                </span>
-                <span className="font-semibold text-brand-dark mt-0.5 block">
-                  {selectedReport.reason}
-                </span>
-              </div>
-
-              <div className="p-3 bg-slate-50 rounded-lg border border-brand-border">
-                <span className="text-[10px] uppercase font-semibold text-brand-muted block">
-                  Risk Assessment
-                </span>
-                <span className="font-bold text-rose-600 mt-0.5 block">
-                  {selectedReport.riskScore}% Probability ({selectedReport.severity})
-                </span>
-              </div>
-            </div>
-
-            {selectedReport.notes && (
-              <div className="p-3 bg-amber-50/60 rounded-lg border border-amber-200 text-amber-900">
-                <span className="font-semibold block mb-0.5">Automated Investigator Notes:</span>
-                <p className="leading-relaxed">{selectedReport.notes}</p>
-              </div>
-            )}
-          </div>
-        </Modal>
-      )}
+      <ReportDetailsModal
+        report={selectedReport}
+        isOpen={!!selectedReport}
+        onClose={() => setSelectedReport(null)}
+        onUpdateStatus={handleUpdateReportStatus}
+      />
     </div>
   );
 }

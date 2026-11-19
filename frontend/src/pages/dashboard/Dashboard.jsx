@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Button } from '../../components/ui/Button';
+import { DateRangeSelector } from '../../components/ui/DateRangeSelector';
 import { StatCard } from '../../components/dashboard/StatCard';
 import { ChartCard } from '../../components/dashboard/ChartCard';
 import { AIInsightCard } from '../../components/dashboard/AIInsightCard';
@@ -40,24 +41,13 @@ export function Dashboard() {
         subtitle="Monitor review authenticity, customer sentiment, and suspicious activity in real time."
         actions={
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-            <div className="inline-flex p-1 bg-white border border-brand-border rounded-lg shadow-2xs">
-              {['7d', '30d', '90d'].map((p) => (
-                <button
-                  key={p}
-                  onClick={() => {
-                    setPeriod(p);
-                    showToast(`Updated view range to last ${p.toUpperCase()}`, 'info', 2000);
-                  }}
-                  className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                    period === p
-                      ? 'bg-[#635BFF] text-white shadow-xs'
-                      : 'text-brand-muted hover:text-brand-dark'
-                  }`}
-                >
-                  {p.toUpperCase()}
-                </button>
-              ))}
-            </div>
+            <DateRangeSelector
+              value={period}
+              onChange={(newPeriod) => {
+                setPeriod(newPeriod);
+                showToast(`Updated view range to last ${newPeriod.toUpperCase()}`, 'info', 2000);
+              }}
+            />
 
             <Button
               variant="secondary"

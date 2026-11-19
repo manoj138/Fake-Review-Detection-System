@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { SearchInput } from '../ui/SearchInput';
+import { Breadcrumbs } from './Breadcrumbs';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useToast } from '../../hooks/useToast';
 import { useAuth } from '../../context/AuthContext';
@@ -85,10 +86,13 @@ export function Header({ onMenuClick }) {
           </button>
 
           <div className="flex flex-col min-w-0">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-muted hidden sm:inline">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-muted hidden sm:inline">
               ReviewGuard AI
             </span>
-            <h2 className="text-xs sm:text-sm font-bold text-brand-dark truncate max-w-[130px] sm:max-w-none">
+            <div className="hidden sm:block">
+              <Breadcrumbs items={[{ label: getBreadcrumbs() }]} />
+            </div>
+            <h2 className="text-xs font-bold text-brand-dark truncate max-w-[140px] sm:hidden">
               {getBreadcrumbs()}
             </h2>
           </div>

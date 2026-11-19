@@ -4,26 +4,19 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { SearchInput } from '../../components/ui/SearchInput';
 import { Select } from '../../components/ui/Select';
-import { RatingStars } from '../../components/reviews/RatingStars';
-import { RiskBadge } from '../../components/reviews/RiskBadge';
-import { SentimentBadge } from '../../components/reviews/SentimentBadge';
 import { ReviewDetailsModal } from '../../components/reviews/ReviewDetailsModal';
+import { ReviewTableRow } from '../../components/reviews/ReviewTableRow';
 import { Pagination } from '../../components/ui/Pagination';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { MOCK_REVIEWS } from '../../data/reviewsData';
 import { useFilters } from '../../hooks/useFilters';
 import { usePagination } from '../../hooks/usePagination';
-import { formatDate } from '../../utils/formatDate';
 import { useLocation } from 'react-router-dom';
 import {
-  Search,
   RotateCcw,
-  Eye,
   CheckCircle2,
   AlertTriangle,
   Clock,
-  ShieldCheck,
-  Filter,
 } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 
@@ -263,79 +256,11 @@ export function ReviewExplorer() {
               </thead>
               <tbody className="divide-y divide-brand-border text-brand-dark">
                 {paginatedData.map((review) => (
-                  <tr
+                  <ReviewTableRow
                     key={review.id}
-                    onClick={() => setSelectedReview(review)}
-                    className="hover:bg-slate-50/80 cursor-pointer transition-colors"
-                  >
-                    <td className="py-3.5 px-4 max-w-xs">
-                      <p className="font-normal text-brand-dark line-clamp-2 italic leading-relaxed">
-                        "{review.snippet}"
-                      </p>
-                      <span className="text-[10px] text-brand-muted mt-1 block">
-                        by {review.reviewer} {review.verified ? '• (Verified)' : ''}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 max-w-[170px]">
-                      <p className="font-semibold text-brand-dark truncate">
-                        {review.product}
-                      </p>
-                      <span className="text-[10px] text-brand-muted">
-                        {review.category}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <RatingStars rating={review.rating} size="xs" />
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <SentimentBadge sentiment={review.sentiment} size="sm" />
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap font-bold">
-                      <span
-                        className={
-                          review.fakeProbability >= 70
-                            ? 'text-rose-600'
-                            : review.fakeProbability >= 40
-                            ? 'text-amber-600'
-                            : 'text-emerald-600'
-                        }
-                      >
-                        {review.fakeProbability}%
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <RiskBadge level={review.riskLevel} size="sm" />
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <span
-                        className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                          review.status === 'Genuine'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : review.status === 'Suspicious'
-                            ? 'bg-rose-50 text-rose-700'
-                            : 'bg-amber-50 text-amber-700'
-                        }`}
-                      >
-                        {review.status}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-brand-muted whitespace-nowrap">
-                      {formatDate(review.date)}
-                    </td>
-                    <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        icon={Eye}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedReview(review);
-                        }}
-                      >
-                        Details
-                      </Button>
-                    </td>
-                  </tr>
+                    review={review}
+                    onInspect={setSelectedReview}
+                  />
                 ))}
               </tbody>
             </table>
