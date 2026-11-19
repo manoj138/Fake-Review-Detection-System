@@ -27,16 +27,15 @@
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
-@layer base {
-  * {
-    border-color: #E6EAF2;
-  }
+/* Global Reset & Base Styling */
+* {
+  border-color: #E6EAF2;
+}
 
-  body {
-    background-color: #F5F7FB;
-    color: #172033;
-    font-family: var(--font-sans);
-  }
+body {
+  background-color: #F5F7FB;
+  color: #172033;
+  font-family: var(--font-sans);
 }
 
 /* Custom subtle scrollbar */
