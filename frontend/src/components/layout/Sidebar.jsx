@@ -14,6 +14,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from '../../constants/navigation';
+import { useAuth } from '../../context/AuthContext';
 
 const ICON_COMPONENTS = {
   LayoutDashboard,
@@ -28,6 +29,7 @@ const ICON_COMPONENTS = {
 
 export function Sidebar({ className = '', onHelpClick }) {
   const location = useLocation();
+  const { user } = useAuth();
 
   return (
     <aside
@@ -158,16 +160,16 @@ export function Sidebar({ className = '', onHelpClick }) {
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xs text-white">
-                VG
+                {user?.avatar || 'VG'}
               </div>
               <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#0E131F]" />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-semibold text-white leading-tight">
-                Vinita G.
+            <div className="flex flex-col text-left max-w-[120px]">
+              <span className="text-xs font-semibold text-white leading-tight truncate">
+                {user?.name || 'Vinita G.'}
               </span>
-              <span className="text-[10px] text-slate-400">
-                Lead Trust Officer
+              <span className="text-[10px] text-slate-400 truncate">
+                {user?.role || 'Lead Trust Officer'}
               </span>
             </div>
           </div>

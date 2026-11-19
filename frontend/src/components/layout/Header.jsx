@@ -14,6 +14,7 @@ import { Button } from '../ui/Button';
 import { SearchInput } from '../ui/SearchInput';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useToast } from '../../hooks/useToast';
+import { useAuth } from '../../context/AuthContext';
 
 export function Header({ onMenuClick, onSearchSubmit }) {
   const [searchValue, setSearchValue] = useState('');
@@ -22,6 +23,7 @@ export function Header({ onMenuClick, onSearchSubmit }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { showToast } = useToast();
+  const { user, logout } = useAuth();
 
   const getBreadcrumbs = () => {
     const path = location.pathname;
@@ -171,8 +173,8 @@ export function Header({ onMenuClick, onSearchSubmit }) {
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-brand-border shadow-popover p-2 z-50 animate-slide-up text-xs">
               <div className="p-2 border-b border-brand-border mb-1">
-                <p className="font-semibold text-brand-dark">Vinita G.</p>
-                <p className="text-brand-muted text-[11px]">lead.trust@reviewguard.ai</p>
+                <p className="font-semibold text-brand-dark">{user?.name || 'Vinita G.'}</p>
+                <p className="text-brand-muted text-[11px] truncate">{user?.email || 'lead.trust@reviewguard.ai'}</p>
               </div>
               <Link
                 to="/settings"
@@ -186,9 +188,11 @@ export function Header({ onMenuClick, onSearchSubmit }) {
                 type="button"
                 onClick={() => {
                   setProfileOpen(false);
-                  showToast('Signed out of demo session.', 'info');
+                  logout();
+                  showToast('You have been logged out.', 'info');
+                  navigate('/login');
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-rose-50 text-rose-600 text-left"
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-md hover:bg-rose-50 text-rose-600 text-left cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
                 <span>Sign Out</span>

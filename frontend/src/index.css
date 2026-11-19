@@ -1,6 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F5F7FB;
+  --color-brand-sidebar: #111827;
+  --color-brand-sidebarHover: #1C2638;
+  --color-brand-primary: #635BFF;
+  --color-brand-primaryHover: #5249E0;
+  --color-brand-ai: #8B5CF6;
+  --color-brand-aiLight: #F3EEFE;
+  --color-brand-success: #16A34A;
+  --color-brand-successLight: #DCFCE7;
+  --color-brand-danger: #EF6464;
+  --color-brand-dangerLight: #FEE2E2;
+  --color-brand-warning: #F59E0B;
+  --color-brand-warningLight: #FEF3C7;
+  --color-brand-card: #FFFFFF;
+  --color-brand-dark: #172033;
+  --color-brand-muted: #718096;
+  --color-brand-border: #E6EAF2;
+  --color-brand-borderLight: #F1F4F9;
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --shadow-subtle: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
 
 @layer base {
   * {
@@ -10,7 +35,7 @@
   body {
     background-color: #F5F7FB;
     color: #172033;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-sans);
   }
 }
 
@@ -32,4 +57,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
-
